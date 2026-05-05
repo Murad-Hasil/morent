@@ -32,6 +32,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          APP_SECRET: ${{ secrets.APP_SECRET }}
 
   e2e:
     name: E2E Tests
@@ -56,6 +58,8 @@ jobs:
 
       - name: Run E2E tests
         run: npm test
+        env:
+          APP_SECRET: ${{ secrets.APP_SECRET }}
 
       - name: Upload test report
         if: always()
