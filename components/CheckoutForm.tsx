@@ -312,7 +312,7 @@ export default function CheckoutForm({ initialCar }: { initialCar: Car & { id: n
               value={promoCode}
               onChange={e => { setPromoCode(e.target.value); setPromoMsg(null); }}
               placeholder="Promo code (MORENT20)"
-              className="flex-1 px-2 py-3 text-sm text-gray-500 dark:text-gray-300 placeholder:text-gray-300 dark:placeholder:text-gray-600 outline-none bg-transparent"
+              className="flex-1 min-w-0 px-2 py-3 text-sm text-gray-500 dark:text-gray-300 placeholder:text-gray-300 dark:placeholder:text-gray-600 outline-none bg-transparent"
             />
             <button onClick={applyPromo} className="px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-[#3563E9] transition-colors whitespace-nowrap border-l border-gray-200 dark:border-gray-700">
               Apply
