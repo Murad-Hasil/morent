@@ -1,4 +1,10 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "You're Offline",
+  robots: { index: false, follow: false },
+};
 
 export default function OfflinePage() {
   return (
@@ -9,12 +15,12 @@ export default function OfflinePage() {
         <p className="text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
           No internet connection. Please check your network and try again.
         </p>
-        <button
-          onClick={() => window.location.reload()}
-          className="bg-[#3563E9] hover:bg-[#2a52c9] transition-colors text-white font-semibold px-8 py-3 rounded-[4px]"
+        <Link
+          href="/"
+          className="bg-[#3563E9] hover:bg-[#2a52c9] transition-colors text-white font-semibold px-8 py-3 rounded-[4px] inline-block"
         >
-          Try again
-        </button>
+          Go to Home
+        </Link>
       </div>
     </div>
   );
