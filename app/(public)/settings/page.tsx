@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/ThemeProvider";
 import { Moon, Sun, Check } from "lucide-react";
@@ -108,7 +109,7 @@ export default function SettingsPage() {
           </form>
         ) : (
           <div className="flex items-center gap-4 px-6 py-5">
-            <img src="https://i.pravatar.cc/80" alt="Profile" className="w-16 h-16 rounded-full object-cover" />
+            <Image src="https://i.pravatar.cc/80" alt="Profile" width={64} height={64} className="w-16 h-16 rounded-full object-cover" />
             <div>
               <p className="font-semibold text-gray-900 dark:text-white">{profileName}</p>
               <p className="text-sm text-gray-400">mbmuradhasil@gmail.com</p>

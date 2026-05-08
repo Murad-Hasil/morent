@@ -6,7 +6,7 @@ test.describe("Checkout Form", () => {
   });
 
   test("shows billing info section", async ({ page }) => {
-    await expect(page.getByText("Billing Info")).toBeVisible();
+    await expect(page.getByText("Billing Info").first()).toBeVisible();
   });
 
   test("shows validation errors on empty submit", async ({ page }) => {
@@ -21,13 +21,16 @@ test.describe("Checkout Form", () => {
     await page.getByLabel("Phone Number").fill("+1 555 123 4567");
     await page.getByLabel("Address").fill("123 Main St");
     await page.getByLabel("Town / City").fill("New York");
-    const errors = page.locator("p.text-red-500");
+    await page.getByLabel("Name").blur();
+    const errors = page.locator(".text-red-500");
     await expect(errors).toHaveCount(0);
   });
 
   test("payment method selection works", async ({ page }) => {
-    const creditBtn = page.getByRole("button", { name: /credit/i });
-    await creditBtn.click();
-    await expect(page.locator("[aria-label='Credit / Debit Card']")).toBeVisible();
+    await expect(page.getByText("Credit Card")).toBeVisible();
+    await expect(page.locator('input[placeholder="1234 5678 9012 3456"]')).toBeVisible();
+    const paypalBtn = page.getByRole("button", { name: /paypal/i });
+    await paypalBtn.click();
+    await expect(page.locator('input[placeholder="1234 5678 9012 3456"]')).not.toBeVisible();
   });
 });

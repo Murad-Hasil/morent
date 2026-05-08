@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Heart, Star } from "lucide-react";
-import { useFavorites, useSelectedCar } from "@/lib/store";
+import { useFavorites } from "@/lib/store";
 import { Car } from "@/lib/data";
 
 interface CarDetailProps {
@@ -15,7 +15,6 @@ export default function CarDetail({ car }: CarDetailProps) {
   const [activeThumb, setActiveThumb] = useState(0);
   const [mounted, setMounted] = useState(false);
   const { toggle, isFavorite: isFav } = useFavorites();
-  const setSelectedCar = useSelectedCar((s) => s.setSelectedCar);
   const router = useRouter();
 
   useEffect(() => setMounted(true), []);
@@ -26,8 +25,7 @@ export default function CarDetail({ car }: CarDetailProps) {
   const thumbnails = [car.image, car.image, car.image];
 
   function handleRentNow() {
-    setSelectedCar(car);
-    router.push("/checkout");
+    router.push(`/checkout?id=${car.id}`);
   }
 
   return (

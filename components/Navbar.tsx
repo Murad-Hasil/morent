@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
-import { Bell, Heart, LayoutDashboard, LogOut, Menu, Moon, Search, Settings, SlidersHorizontal, Sun, User, X } from "lucide-react";
+import Image from "next/image";
+import { Bell, Heart, LayoutDashboard, LogOut, Menu, Moon, Search, Settings, SlidersHorizontal, Sun, X } from "lucide-react";
 import { useFavorites, useNotifs } from "@/lib/store";
 
 const notifications = [
@@ -22,7 +23,7 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
   const { theme, setTheme } = useTheme();
   const favCount = useFavorites((s) => s.favorites.length);
-  const { readIds, markAllRead, isRead } = useNotifs();
+  const { markAllRead, isRead } = useNotifs();
   const router = useRouter();
   useEffect(() => setMounted(true), []);
 
@@ -64,7 +65,7 @@ export default function Navbar() {
           <Link href="/favorites" aria-label={mounted && favCount > 0 ? `Favorites (${favCount})` : "Favorites"} className="relative text-gray-400 hover:text-[#3563E9] dark:hover:text-[#3563E9] transition-colors">
             <Heart size={24} aria-hidden="true" />
             {mounted && favCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#3563E9] text-white text-[9px] font-bold rounded-full flex items-center justify-center" aria-hidden="true">
+              <span data-testid="fav-badge" className="absolute -top-1 -right-1 w-4 h-4 bg-[#3563E9] text-white text-[9px] font-bold rounded-full flex items-center justify-center" aria-hidden="true">
                 {favCount}
               </span>
             )}
@@ -140,7 +141,7 @@ export default function Navbar() {
               onClick={() => { setProfileOpen(!profileOpen); setNotifOpen(false); }}
               className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden shrink-0 ring-2 ring-transparent hover:ring-[#3563E9] transition-all"
             >
-              <img src="https://i.pravatar.cc/40" alt="" className="w-full h-full object-cover" />
+              <Image src="https://i.pravatar.cc/40" alt="Profile" width={40} height={40} className="w-full h-full object-cover" />
             </button>
 
             {profileOpen && (
@@ -208,7 +209,14 @@ export default function Navbar() {
             />
           </form>
           <div className="flex items-center justify-around py-2">
-            <Link href="/favorites" aria-label="Favorites" className="text-gray-400 hover:text-[#3563E9] transition-colors"><Heart size={22} aria-hidden="true" /></Link>
+            <Link href="/favorites" aria-label={mounted && favCount > 0 ? `Favorites (${favCount})` : "Favorites"} className="relative text-gray-400 hover:text-[#3563E9] transition-colors">
+              <Heart size={22} aria-hidden="true" />
+              {mounted && favCount > 0 && (
+                <span data-testid="fav-badge" className="absolute -top-1 -right-1 w-4 h-4 bg-[#3563E9] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                  {favCount}
+                </span>
+              )}
+            </Link>
             <button
               aria-label="Notifications"
               onClick={() => { setMobileOpen(false); setNotifOpen(true); }}
@@ -228,7 +236,7 @@ export default function Navbar() {
               {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
             </button>
             <button aria-label="View profile" className="w-9 h-9 rounded-full bg-gray-300 overflow-hidden">
-              <img src="https://i.pravatar.cc/40" alt="" className="w-full h-full object-cover" />
+              <Image src="https://i.pravatar.cc/40" alt="Profile" width={40} height={40} className="w-full h-full object-cover" />
             </button>
           </div>
         </div>

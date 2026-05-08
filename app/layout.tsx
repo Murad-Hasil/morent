@@ -37,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('morent-theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='dark'||(!t&&d))document.documentElement.classList.add('dark')}catch(e){}` }} />
       </head>
-      <body className="min-h-full flex flex-col bg-[#F6F7F9] dark:bg-gray-950 transition-colors duration-300">
+      <body className="min-h-full flex flex-col bg-[#F6F7F9] dark:bg-gray-950 transition-colors duration-300 overflow-x-hidden">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

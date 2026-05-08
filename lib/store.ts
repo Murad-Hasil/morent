@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Car } from "@/lib/data";
 
 interface FavoritesStore {
   favorites: string[];
@@ -21,21 +20,6 @@ export const useFavorites = create<FavoritesStore>()(
       isFavorite: (carName) => get().favorites.includes(carName),
     }),
     { name: "morent-favorites" }
-  )
-);
-
-interface SelectedCarStore {
-  selectedCar: (Car & { id: number }) | null;
-  setSelectedCar: (car: Car & { id: number }) => void;
-}
-
-export const useSelectedCar = create<SelectedCarStore>()(
-  persist(
-    (set) => ({
-      selectedCar: null,
-      setSelectedCar: (car) => set({ selectedCar: car }),
-    }),
-    { name: "morent-selected-car" }
   )
 );
 

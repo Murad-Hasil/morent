@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(_request: NextRequest) {
   if (!process.env.APP_SECRET) {
     return new NextResponse(
       `<!DOCTYPE html>

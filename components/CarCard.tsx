@@ -1,12 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Heart } from "lucide-react";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { useFavorites, useSelectedCar } from "@/lib/store";
+import FavoriteButton from "./FavoriteButton";
+import RentNowButton from "./RentNowButton";
 import { Car } from "@/lib/data";
 
 interface CarCardProps {
@@ -27,18 +22,6 @@ export default function CarCard({
   id, name, type, image, fuel, transmission, capacity,
   price, originalPrice, index = 0, priority = false,
 }: CarCardProps) {
-  const { toggle, isFavorite: isFav } = useFavorites();
-  const setSelectedCar = useSelectedCar((s) => s.setSelectedCar);
-  const router = useRouter();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const fav = mounted && isFav(name);
-
-  function handleRentNow() {
-    setSelectedCar({ id, name, type, image: image ?? "", fuel, transmission, capacity: typeof capacity === "string" ? parseInt(capacity) : capacity, price, originalPrice });
-    router.push("/checkout");
-  }
-
   return (
     <div
       style={{ animationDelay: `${index * 0.07}s` }}
@@ -51,25 +34,7 @@ export default function CarCard({
           <h3 className="font-bold text-gray-900 dark:text-white text-base truncate">{name}</h3>
           <span className="text-xs text-gray-400 dark:text-gray-500">{type}</span>
         </Link>
-        <button
-          aria-label={fav ? `Remove ${name} from favorites` : `Add ${name} to favorites`}
-          aria-pressed={fav}
-          onClick={() => {
-            toggle(name);
-            toast(fav ? "Removed from favorites" : "Added to favorites", {
-              icon: fav ? "💔" : "❤️",
-              duration: 2000,
-            });
-          }}
-          className="shrink-0 ml-2 active:scale-75 transition-transform"
-        >
-          <Heart
-            key={fav ? "fav" : "not-fav"}
-            size={20}
-            aria-hidden="true"
-            className={fav ? "fill-red-500 text-red-500 animate-heartbeat" : "text-gray-300 hover:text-red-400 transition-colors"}
-          />
-        </button>
+        <FavoriteButton name={name} />
       </div>
 
       {/* Car Image */}
@@ -107,12 +72,7 @@ export default function CarCard({
             <div className="text-xs text-gray-300 line-through">${originalPrice.toFixed(2)}</div>
           )}
         </div>
-        <button
-          onClick={handleRentNow}
-          className="bg-[#3563E9] hover:bg-[#2a52c9] transition-colors text-white text-sm font-semibold px-4 py-2 rounded-[4px]"
-        >
-          Rent Now
-        </button>
+        <RentNowButton id={id} />
       </div>
     </div>
   );

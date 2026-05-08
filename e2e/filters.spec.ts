@@ -13,10 +13,11 @@ test.describe("Car Filters", () => {
   });
 
   test("filtering by type reduces results", async ({ page }) => {
+    await page.locator("[data-testid='car-card']").first().waitFor({ state: "visible" });
     const initialCards = await page.locator("[data-testid='car-card']").count();
 
-    await page.getByRole("checkbox", { name: "Sport" }).check();
-    await page.waitForTimeout(300);
+    await page.locator("aside li").filter({ hasText: /^Sport/ }).first().click();
+    await page.waitForTimeout(1200);
 
     const filteredCards = await page.locator("[data-testid='car-card']").count();
     expect(filteredCards).toBeLessThanOrEqual(initialCards);

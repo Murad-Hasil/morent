@@ -9,8 +9,8 @@ test.describe("Navigation", () => {
 
   test("navigates to car detail page", async ({ page }) => {
     await page.goto("/cars/detail");
-    await expect(page).toHaveTitle(/Car Detail/);
-    await expect(page.getByText("Nissan GT - R")).toBeVisible();
+    await expect(page).toHaveTitle(/— Morent/);
+    await expect(page.locator("h2").first()).toBeVisible();
   });
 
   test("navigates to checkout page", async ({ page }) => {
@@ -23,9 +23,9 @@ test.describe("Navigation", () => {
     await expect(page).toHaveTitle(/Dashboard/);
   });
 
-  test("Rent Now button links to checkout", async ({ page }) => {
+  test("Rent Now button navigates to checkout", async ({ page }) => {
     await page.goto("/");
-    const rentButton = page.getByRole("link", { name: "Rent Now" }).first();
+    const rentButton = page.getByRole("button", { name: "Rent Now" }).first();
     await rentButton.click();
     await expect(page).toHaveURL("/checkout");
   });

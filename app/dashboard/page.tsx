@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import DetailsRental from "@/components/DetailsRental";
 import Top5Chart from "@/components/Top5Chart";
 import RecentTransactions from "@/components/RecentTransactions";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "View your rental stats, top cars, and recent transactions.",
+};
 
 export default function DashboardPage() {
   return (

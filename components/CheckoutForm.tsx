@@ -6,9 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Star, ShieldCheck, ChevronDown, CheckCircle2, Tag } from "lucide-react";
-import toast from "react-hot-toast";
-import { useSelectedCar } from "@/lib/store";
-import { allCars } from "@/lib/data";
+import { toast } from "@/lib/toast";
+import { Car } from "@/lib/data";
 import {
   billingSchema, rentalSchema, paymentSchema, confirmSchema,
   BillingData, RentalData, PaymentData, ConfirmData,
@@ -89,9 +88,8 @@ function daysBetween(a: string, b: string): number {
   return Math.max(1, days);
 }
 
-export default function CheckoutForm() {
-  const { selectedCar } = useSelectedCar();
-  const car = selectedCar ?? { ...allCars[0], id: 0 };
+export default function CheckoutForm({ initialCar }: { initialCar: Car & { id: number } }) {
+  const car = initialCar;
 
   const [paymentMethod, setPaymentMethod] = useState<"credit" | "paypal" | "bitcoin">("credit");
   const [step1Done, setStep1Done] = useState(false);

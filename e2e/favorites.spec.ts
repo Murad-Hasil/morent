@@ -16,9 +16,14 @@ test.describe("Favorites", () => {
   test("favorite count updates in navbar", async ({ page }) => {
     const heartBtn = page.getByRole("button", { name: /Add .* to favorites/ }).first();
     await heartBtn.click();
-    await page.waitForTimeout(300);
-    const badge = page.locator("nav").getByText("1");
-    await expect(badge).toBeVisible();
+    await page.waitForTimeout(500);
+    // On mobile open hamburger to see the badge
+    const hamburger = page.getByRole("button", { name: "Open menu" });
+    if (await hamburger.isVisible()) {
+      await hamburger.click();
+      await page.waitForTimeout(200);
+    }
+    await expect(page.locator('[data-testid="fav-badge"]').filter({ hasText: "1" }).last()).toBeVisible();
   });
 
   test("unfavoriting shows removal toast", async ({ page }) => {

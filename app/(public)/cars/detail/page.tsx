@@ -20,10 +20,35 @@ export default async function CarDetailPage({ searchParams }: { searchParams: Pr
   const carId = Math.max(0, Math.min(parseInt(id ?? "0", 10), allCars.length - 1));
   const car = allCars[carId] ?? allCars[0];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Car",
+    "name": car.name,
+    "vehicleTransmission": car.transmission,
+    "fuelType": car.fuel,
+    "seatingCapacity": car.capacity,
+    "offers": {
+      "@type": "Offer",
+      "price": car.price.toFixed(2),
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": car.price.toFixed(2),
+        "priceCurrency": "USD",
+        "unitText": "DAY",
+      },
+    },
+  };
+
   return (
-    <div className="w-full px-6 py-8 flex flex-col lg:flex-row gap-6 items-start">
+    <div className="w-full px-6 py-8 flex flex-col lg:flex-row gap-6 lg:items-start">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <FilterSidebar />
-      <div className="flex-1 min-w-0 flex flex-col gap-6">
+      <div className="w-full flex-1 min-w-0 flex flex-col gap-6">
         <CarDetail car={{ ...car, id: carId }} />
         <Reviews />
         <Suspense fallback={

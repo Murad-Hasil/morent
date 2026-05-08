@@ -6,7 +6,7 @@ test.describe("Homepage", () => {
   });
 
   test("renders navbar with logo", async ({ page }) => {
-    await expect(page.getByText("MORENT")).toBeVisible();
+    await expect(page.locator("nav").getByText("MORENT")).toBeVisible();
   });
 
   test("renders hero banners", async ({ page }) => {

@@ -133,11 +133,19 @@ npm run test:ui
 
 ## Environment Variables
 
-No environment variables are required. Create `.env.local` to override defaults:
+Create a `.env.local` file in the project root:
 
 ```env
-# .env.local (optional)
-NEXT_PUBLIC_BASE_URL=https://your-domain.com
+# .env.local
+APP_SECRET=any-random-string-here
+```
+
+`APP_SECRET` is required — the app will refuse to start without it. It acts as a basic guard; any non-empty string works locally.
+
+On Vercel, set it via **Project Settings → Environment Variables** or:
+
+```bash
+vercel env add APP_SECRET
 ```
 
 ---

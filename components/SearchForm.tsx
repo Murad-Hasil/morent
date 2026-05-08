@@ -29,7 +29,7 @@ function PickDropSection({
   const toggle = (field: string) => setOpenDropdown(isOpen(field) ? null : key(field));
 
   return (
-    <div className="flex items-center gap-4 flex-1 min-w-0">
+    <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-4 flex-1 min-w-0 w-full">
       {/* Label */}
       <div className="flex items-center gap-2 shrink-0">
         <div className={`w-3.5 h-3.5 rounded-full border-4 ${dotColor}`} />
@@ -37,10 +37,10 @@ function PickDropSection({
       </div>
 
       {/* Fields */}
-      <div className="flex gap-3 flex-1 min-w-0">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-1 min-w-0">
 
         {/* City */}
-        <div className="relative flex-1 min-w-0">
+        <div className="relative col-span-2 sm:col-span-1">
           <button
             type="button"
             onClick={() => toggle("city")}
@@ -70,7 +70,7 @@ function PickDropSection({
         </div>
 
         {/* Date */}
-        <div className="relative flex-1 min-w-0">
+        <div className="relative">
           <button
             type="button"
             onClick={() => toggle("date")}
@@ -95,7 +95,7 @@ function PickDropSection({
         </div>
 
         {/* Time */}
-        <div className="relative flex-1 min-w-0">
+        <div className="relative">
           <button
             type="button"
             onClick={() => toggle("time")}
@@ -145,7 +145,7 @@ export default function SearchForm() {
         <div className="fixed inset-0 z-20" onClick={() => setOpenDropdown(null)} />
       )}
 
-      <div className="relative z-30 bg-white dark:bg-gray-900 rounded-[10px] p-5 flex flex-col lg:flex-row items-start lg:items-center gap-4 shadow-sm transition-colors duration-300">
+      <div className="relative z-30 bg-white dark:bg-gray-900 rounded-[10px] p-5 flex flex-col lg:flex-row lg:items-center gap-4 shadow-sm transition-colors duration-300">
         <PickDropSection
           label="Pick - Up"
           dotColor="border-[#3563E9] bg-[#3563E9]"
@@ -160,7 +160,7 @@ export default function SearchForm() {
           type="button"
           aria-label="Swap pick-up and drop-off"
           onClick={handleSwap}
-          className="w-10 h-10 rounded-[4px] bg-[#3563E9] hover:bg-[#2a52c9] transition-colors flex items-center justify-center shrink-0"
+          className="w-10 h-10 rounded-[4px] bg-[#3563E9] hover:bg-[#2a52c9] transition-colors flex items-center justify-center shrink-0 self-center lg:self-auto"
         >
           <ArrowLeftRight size={18} className="text-white" aria-hidden="true" />
         </button>

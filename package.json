@@ -15,17 +15,22 @@
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
     "@hookform/resolvers": "^5.2.2",
-    "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
     "next": "16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.75.0",
-    "react-hot-toast": "^2.6.0",
     "sharp": "^0.34.5",
     "zod": "^4.4.2",
     "zustand": "^5.0.12"
   },
+  "browserslist": [
+    "Chrome >= 90",
+    "Firefox >= 90",
+    "Safari >= 14",
+    "Edge >= 90",
+    "not dead"
+  ],
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4",

@@ -11,6 +11,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "public/sw.js",
+    "public/workbox-*.js",
+    "public/fallback-*.js",
+    "public/swe-worker-*.js",
   ]),
   {
     rules: {
@@ -18,7 +22,7 @@ const eslintConfig = defineConfig([
       "react-hooks/immutability": "off",
       "react-hooks/incompatible-library": "off",
       "react/no-unescaped-entities": "off",
-      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
       "@next/next/no-img-element": "warn",
     },
   },
