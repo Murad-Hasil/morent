@@ -2,7 +2,6 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import FilterSidebar, { defaultFilters, type FilterState } from "@/components/FilterSidebar";
 import SearchForm from "@/components/SearchForm";
 import CarCard from "@/components/CarCard";
@@ -28,10 +27,10 @@ function CarsContent() {
   });
 
   return (
-    <div className="w-full px-6 py-8 flex flex-col lg:flex-row gap-6 items-start overflow-x-hidden">
+    <div className="w-full px-6 py-8 flex flex-col lg:flex-row gap-6 lg:items-start">
       <FilterSidebar filters={filters} onChange={setFilters} />
 
-      <div className="flex-1 min-w-0 flex flex-col gap-6">
+      <div className="w-full flex-1 min-w-0 flex flex-col gap-6">
         <SearchForm />
 
         {q && (
@@ -40,36 +39,26 @@ function CarsContent() {
           </p>
         )}
 
-        <AnimatePresence mode="wait">
-          {filtered.length === 0 ? (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-              className="flex flex-col items-center justify-center py-24 gap-4 text-center"
+        {filtered.length === 0 ? (
+          <div className="animate-fade-in-up flex flex-col items-center justify-center py-24 gap-4 text-center">
+            <span className="text-5xl">🚗</span>
+            <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">No cars found</p>
+            <p className="text-sm text-gray-400">Try adjusting your filters</p>
+            <button
+              onClick={() => setFilters(defaultFilters)}
+              className="mt-2 text-[#3563E9] text-sm font-semibold hover:underline"
             >
-              <span className="text-5xl">🚗</span>
-              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">No cars found</p>
-              <p className="text-sm text-gray-400">Try adjusting your filters</p>
-              <button
-                onClick={() => setFilters(defaultFilters)}
-                className="mt-2 text-[#3563E9] text-sm font-semibold hover:underline"
-              >
-                Clear filters
-              </button>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="grid"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"
-            >
-              {filtered.slice(0, visibleCount).map((car, i) => {
-                const globalId = allCars.indexOf(car);
-                return <CarCard key={car.name + i} id={globalId} {...car} index={i} priority={i === 0} />;
-              })}
-            </motion.div>
-          )}
-        </AnimatePresence>
+              Clear filters
+            </button>
+          </div>
+        ) : (
+          <div className="animate-fade-in grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+            {filtered.slice(0, visibleCount).map((car, i) => {
+              const globalId = allCars.indexOf(car);
+              return <CarCard key={car.name + i} id={globalId} {...car} index={i} priority={i < 6} />;
+            })}
+          </div>
+        )}
 
         {filtered.length > 0 && (
           <div className="flex justify-center mt-2">
@@ -93,9 +82,9 @@ function CarsContent() {
 export default function CarsPage() {
   return (
     <Suspense fallback={
-      <div className="w-full px-6 py-8 flex flex-col lg:flex-row gap-6 items-start">
+      <div className="w-full px-6 py-8 flex flex-col lg:flex-row gap-6 lg:items-start">
         <div className="w-full lg:w-[260px] shrink-0 h-64 bg-white dark:bg-gray-900 rounded-[10px] animate-pulse" />
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
           {[...Array(6)].map((_, i) => <CarCardSkeleton key={i} />)}
         </div>
       </div>

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -41,13 +40,10 @@ export default function CarCard({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.07, ease: "easeOut" }}
-      whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(53,99,233,0.12)" }}
+    <div
+      style={{ animationDelay: `${index * 0.07}s` }}
       data-testid="car-card"
-      className="bg-white dark:bg-gray-900 rounded-[10px] p-5 flex flex-col gap-4 cursor-pointer border border-transparent dark:border-gray-800 transition-colors"
+      className="animate-fade-in-up bg-white dark:bg-gray-900 rounded-[10px] p-5 flex flex-col gap-4 cursor-pointer border border-transparent dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(53,99,233,0.12)]"
     >
       {/* Top row */}
       <div className="flex items-start justify-between">
@@ -55,8 +51,7 @@ export default function CarCard({
           <h3 className="font-bold text-gray-900 dark:text-white text-base truncate">{name}</h3>
           <span className="text-xs text-gray-400 dark:text-gray-500">{type}</span>
         </Link>
-        <motion.button
-          whileTap={{ scale: 0.8 }}
+        <button
           aria-label={fav ? `Remove ${name} from favorites` : `Add ${name} to favorites`}
           aria-pressed={fav}
           onClick={() => {
@@ -66,16 +61,15 @@ export default function CarCard({
               duration: 2000,
             });
           }}
-          className="shrink-0 ml-2"
+          className="shrink-0 ml-2 active:scale-75 transition-transform"
         >
-          <motion.div animate={{ scale: fav ? [1, 1.3, 1] : 1 }} transition={{ duration: 0.3 }}>
-            <Heart
-              size={20}
-              aria-hidden="true"
-              className={fav ? "fill-red-500 text-red-500" : "text-gray-300 hover:text-red-400 transition-colors"}
-            />
-          </motion.div>
-        </motion.button>
+          <Heart
+            key={fav ? "fav" : "not-fav"}
+            size={20}
+            aria-hidden="true"
+            className={fav ? "fill-red-500 text-red-500 animate-heartbeat" : "text-gray-300 hover:text-red-400 transition-colors"}
+          />
+        </button>
       </div>
 
       {/* Car Image */}
@@ -120,6 +114,6 @@ export default function CarCard({
           Rent Now
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 }

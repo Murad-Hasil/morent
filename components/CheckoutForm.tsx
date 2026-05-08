@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { Star, ShieldCheck, ChevronDown, CheckCircle2, Tag } from "lucide-react";
 import toast from "react-hot-toast";
 import { useSelectedCar } from "@/lib/store";
@@ -21,24 +21,14 @@ const PROMO_CODES: Record<string, number> = {
 
 function FieldError({ msg }: { msg?: string }) {
   if (!msg) return null;
-  return (
-    <AnimatePresence>
-      <motion.p
-        initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-        className="text-xs text-red-500 mt-1"
-      >{msg}</motion.p>
-    </AnimatePresence>
-  );
+  return <p className="text-xs text-red-500 mt-1 animate-fade-in-down">{msg}</p>;
 }
 
 function SectionCard({ step, title, subtitle, done, children }: {
   step: string; title: string; subtitle: string; done?: boolean; children: React.ReactNode;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-      className="bg-white dark:bg-gray-900 rounded-[10px] p-6 flex flex-col gap-5 border border-transparent dark:border-gray-800"
-    >
+    <div className="animate-fade-in-up bg-white dark:bg-gray-900 rounded-[10px] p-6 flex flex-col gap-5 border border-transparent dark:border-gray-800">
       <div className="flex items-start justify-between">
         <div>
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">{title}</h2>
@@ -50,17 +40,19 @@ function SectionCard({ step, title, subtitle, done, children }: {
         </div>
       </div>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 function InputField({ label, placeholder, error, registration }: {
   label: string; placeholder: string; error?: string; registration: object;
 }) {
+  const id = label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   return (
     <div>
-      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">{label}</label>
+      <label htmlFor={id} className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">{label}</label>
       <input
+        id={id}
         placeholder={placeholder}
         {...registration}
         className={`w-full border rounded-[8px] px-4 py-3 text-sm text-gray-700 dark:text-gray-200 placeholder:text-gray-300 dark:placeholder:text-gray-600 outline-none bg-[#F6F7F9] dark:bg-gray-800 transition-colors
@@ -253,13 +245,12 @@ export default function CheckoutForm() {
               <span className="text-sm text-gray-600 dark:text-gray-300">I agree with our terms and conditions and privacy policy.</span>
             </label>
             <FieldError msg={confirm.formState.errors.agreeTerms?.message} />
-            <motion.button
-              whileTap={{ scale: 0.97 }}
+            <button
               onClick={handleSubmit}
-              className="mt-2 bg-[#3563E9] hover:bg-[#2a52c9] transition-colors text-white font-semibold px-8 py-3.5 rounded-[4px] w-fit"
+              className="mt-2 bg-[#3563E9] hover:bg-[#2a52c9] active:scale-[0.97] transition-all text-white font-semibold px-8 py-3.5 rounded-[4px] w-fit"
             >
               Rent Now
-            </motion.button>
+            </button>
             <div className="flex items-start gap-3 mt-2">
               <ShieldCheck size={20} className="text-gray-400 shrink-0 mt-0.5" />
               <div>
