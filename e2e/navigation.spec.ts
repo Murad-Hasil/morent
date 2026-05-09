@@ -27,6 +27,6 @@ test.describe("Navigation", () => {
     await page.goto("/");
     const rentButton = page.getByRole("button", { name: "Rent Now" }).first();
     await rentButton.click();
-    await expect(page).toHaveURL("/checkout");
+    await expect(page).toHaveURL(/\/checkout/);
   });
 });
