@@ -51,3 +51,6 @@ AGENTS.md
 playwright-report/
 test-results/
 .playwright-mcp/
+
+# debug screenshots (root level only)
+/*.png
